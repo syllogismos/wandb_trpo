@@ -8,7 +8,7 @@ import os
 import shutil
 import glob
 import csv
-
+import wandb
 
 class Scaler(object):
     """ Generate scale and offset based on running mean and stddev along axis=0
@@ -94,6 +94,7 @@ class Logger(object):
             self.writer.writeheader()
             self.write_header = False
         self.writer.writerow(self.log_entry)
+        wandb.log(self.log_entry)
         self.log_entry = {}
 
     @staticmethod

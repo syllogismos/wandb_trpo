@@ -36,6 +36,7 @@ from datetime import datetime
 import os
 import argparse
 import signal
+import wandb
 
 
 class GracefulKiller:
@@ -331,4 +332,5 @@ if __name__ == "__main__":
                         default=-1.0)
 
     args = parser.parse_args()
+    wandb.init(config=args)
     main(**vars(args))
