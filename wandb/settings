@@ -1,0 +1,4 @@
+[default]
+entity: syllogismos
+project: mountaincar
+base_url: https://api.wandb.ai
