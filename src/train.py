@@ -142,7 +142,7 @@ def run_policy(env, policy, scaler, logger, episodes):
         trajectories.append(trajectory)
     unscaled = np.concatenate([t['unscaled_obs'] for t in trajectories])
     scaler.update(unscaled)  # update running statistics for scaling observations
-    logger.log({'_MeanReward': np.mean([t['rewards'].sum() for t in trajectories]),
+    logger.log({'MeanReward': np.mean([t['rewards'].sum() for t in trajectories]),
                 'Steps': total_steps})
 
     return trajectories
@@ -279,7 +279,7 @@ def main(env_name, num_episodes, gamma, lam, kl_targ, batch_size, hid1_mult, pol
     obs_dim += 1  # add 1 to obs dimension for time step feature (see run_episode())
     now = datetime.utcnow().strftime("%b-%d_%H:%M:%S")  # create unique directories
     logger = Logger(logname=env_name, now=now)
-    aigym_path = os.path.join('/tmp', env_name, now)
+    aigym_path = os.path.join(wandb.run.dir, env_name, now)
     env = wrappers.Monitor(env, aigym_path, force=True)
     scaler = Scaler(obs_dim)
     val_func = NNValueFunction(obs_dim, hid1_mult)
